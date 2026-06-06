@@ -1,0 +1,246 @@
+/* MomsMed Guide — refinements on top of Tailwind CDN */
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 90px;
+}
+
+body {
+  font-feature-settings: 'cv11', 'ss01';
+}
+
+/* Modal helpers ---------------------------------------------------------- */
+.modal.is-open {
+  display: flex !important;
+  animation: fade-in 0.18s ease-out;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Tab pills -------------------------------------------------------------- */
+.tab-pill {
+  color: #6c5fae;
+  background: transparent;
+}
+.tab-pill[aria-selected='true'][data-tab='green'] {
+  background: linear-gradient(135deg, #d1fae5, #ecfdf5);
+  color: #065f46;
+}
+.tab-pill[aria-selected='true'][data-tab='yellow'] {
+  background: linear-gradient(135deg, #fef3c7, #fffbeb);
+  color: #92400e;
+}
+.tab-pill[aria-selected='true'][data-tab='red'] {
+  background: linear-gradient(135deg, #ffe4e6, #fff1f2);
+  color: #9f1239;
+}
+
+.admin-tab {
+  color: #6c5fae;
+  background: #fdf2f8;
+}
+.admin-tab[aria-selected='true'] {
+  background: linear-gradient(135deg, #ec4899, #be185d);
+  color: white;
+}
+
+/* Theme-aware accent for the page ---------------------------------------- */
+body[data-accent='green'] #app-header {
+  background-color: rgba(236, 253, 245, 0.85);
+}
+body[data-accent='yellow'] #app-header {
+  background-color: rgba(255, 251, 235, 0.85);
+}
+body[data-accent='red'] #app-header {
+  background-color: rgba(255, 241, 242, 0.85);
+}
+
+/* Quiz cards ------------------------------------------------------------- */
+.quiz-card {
+  background: white;
+  border: 1px solid #fbcfe8;
+  border-radius: 1.25rem;
+  padding: 1.25rem;
+  box-shadow: 0 14px 40px -16px rgba(31, 17, 71, 0.18);
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  transition: transform 0.2s ease;
+}
+.quiz-card:hover {
+  transform: translateY(-2px);
+}
+.quiz-buttons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
+}
+.quiz-btn {
+  border: 1px solid #e9d5ff;
+  border-radius: 0.75rem;
+  padding: 0.6rem 0.75rem;
+  font-weight: 600;
+  background: #faf5ff;
+  color: #3b2a6b;
+  transition: all 0.15s ease;
+}
+.quiz-btn:hover {
+  border-color: #c084fc;
+  color: #6b21a8;
+}
+.quiz-btn[data-state='correct'] {
+  background: #ecfdf5;
+  border-color: #6ee7b7;
+  color: #065f46;
+}
+.quiz-btn[data-state='wrong'] {
+  background: #ffe4e6;
+  border-color: #fda4af;
+  color: #9f1239;
+}
+.quiz-feedback {
+  border-radius: 0.85rem;
+  padding: 0.75rem 0.9rem;
+  font-size: 0.85rem;
+  line-height: 1.45;
+  border: 1px solid transparent;
+}
+.quiz-feedback[data-tone='green'] {
+  background: #ecfdf5;
+  border-color: #a7f3d0;
+  color: #065f46;
+}
+.quiz-feedback[data-tone='yellow'] {
+  background: #fffbeb;
+  border-color: #fde68a;
+  color: #92400e;
+}
+.quiz-feedback[data-tone='red'] {
+  background: #fff1f2;
+  border-color: #fda4af;
+  color: #9f1239;
+}
+
+/* Entry cards ------------------------------------------------------------ */
+.entry-card {
+  border-radius: 1.25rem;
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  background: white;
+  padding: 1rem 1.1rem;
+  box-shadow: 0 14px 40px -20px rgba(31, 17, 71, 0.18);
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+.entry-card[data-tone='green'] {
+  border-color: #bbf7d0;
+  background: linear-gradient(180deg, #ffffff 60%, #f0fdf4);
+}
+.entry-card[data-tone='yellow'] {
+  border-color: #fde68a;
+  background: linear-gradient(180deg, #ffffff 60%, #fffbeb);
+}
+.entry-card[data-tone='red'] {
+  border-color: #fecaca;
+  background: linear-gradient(180deg, #ffffff 60%, #fff1f2);
+}
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  border-radius: 999px;
+  padding: 0.2rem 0.55rem;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.pill-green {
+  background: #d1fae5;
+  color: #065f46;
+}
+.pill-yellow {
+  background: #fef3c7;
+  color: #92400e;
+}
+.pill-red {
+  background: #ffe4e6;
+  color: #9f1239;
+}
+
+/* Animations ------------------------------------------------------------- */
+.fade-in {
+  animation: rise 0.32s ease both;
+}
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Toast ------------------------------------------------------------------ */
+#toast.show {
+  display: block;
+  animation: pop 0.3s ease;
+}
+@keyframes pop {
+  from {
+    opacity: 0;
+    transform: translate(-50%, 10px);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}
+
+/* Admin editor ----------------------------------------------------------- */
+.admin-entry {
+  border: 1px solid #fbcfe8;
+  border-radius: 1rem;
+  padding: 0.85rem;
+  background: #fff;
+  display: grid;
+  gap: 0.5rem;
+}
+.admin-entry input,
+.admin-entry textarea {
+  width: 100%;
+  border: 1px solid #f5d0fe;
+  border-radius: 0.6rem;
+  padding: 0.45rem 0.6rem;
+  font-size: 0.85rem;
+  background: #fff;
+}
+.admin-entry textarea {
+  min-height: 60px;
+  resize: vertical;
+}
+.admin-entry input:focus,
+.admin-entry textarea:focus {
+  outline: none;
+  border-color: #ec4899;
+  box-shadow: 0 0 0 3px rgba(236, 72, 153, 0.18);
+}
+
+@media (max-width: 640px) {
+  #tab-bar {
+    top: 64px;
+  }
+}

@@ -22,8 +22,113 @@ const state = {
   tab: 'green',
   quiz: {},
   auth: { token: localStorage.getItem('mm.token') || null, isAdmin: false },
-  draft: null // editable copy for admin mode
+  draft: null, // editable copy for admin mode
+  lang: localStorage.getItem('mm.lang') || 'en',
+  searchQuery: ''
 };
+
+const i18n = {
+  ar: {
+    "MomsMed Guide": "دليل أدوية الحوامل",
+    "Pharmacist-curated pregnancy catalog": "دليل أدوية وحمل برعاية صيادلة",
+    "Doctor login": "تسجيل دخول الطبيب",
+    "Admin dashboard": "لوحة الإدارة",
+    "QR-friendly pharmacy companion": "رفيق الصيدلية الذكي",
+    "Safe medication & herb guidance for": "دليل الأمان للأدوية والأعشاب لـ",
+    "every trimester.": "كل مراحل الحمل.",
+    "Tap a colour to explore the catalog...": "اضغط على لون لاستكشاف الدليل. قم بالتصفية حسب سوق الصيدلة المحلي لإزالة الأسماء التجارية المربكة. تأكد دائماً من طبيبك قبل بدء أي علاج جديد.",
+    "Browse the catalog": "تصفح الدليل",
+    "Try the knowledge quiz": "جرب اختبار المعرفة",
+    "Safe": "آمن",
+    "Caution": "حذر",
+    "Danger": "خطر",
+    "Green Mode": "الوضع الأخضر",
+    "Yellow Mode": "الوضع الأصفر",
+    "Red Mode": "الوضع الأحمر",
+    "First-line medications & permitted herbs.": "الأدوية الأساسية والأعشاب المسموحة.",
+    "Conditional use under medical supervision.": "استخدام مشروط تحت إشراف طبي.",
+    "Globally prohibited drugs & herbs.": "أدوية وأعشاب ممنوعة عالمياً.",
+    "Interactive learning": "تعلم تفاعلي",
+    "Pharmacy myth-buster quiz": "اختبار كشف خرافات الصيدلة",
+    "Tap True or False on each card. Instant evidence-based feedback follows.": "اضغط صح أو خطأ على كل بطاقة. ملاحظات فورية تتبع ذلك.",
+    "Score:": "النتيجة:",
+    "Educational use only — always consult a licensed physician...": "للاستخدام التعليمي فقط — استشر دائماً طبيباً مرخصاً قبل بدء أو إيقاف أي دواء.",
+    "Pharmacy doctor login": "تسجيل دخول طبيب صيدلاني",
+    "🟢 Safe": "🟢 آمن",
+    "🟡 Caution": "🟡 حذر",
+    "🔴 Danger": "🔴 خطر",
+    "Leave Feedback": "اترك تعليقاً",
+    "Help us improve the catalog.": "ساعدنا في تحسين الدليل.",
+    "Submit": "إرسال",
+    "Safe medications": "أدوية آمنة",
+    "Permitted herbs": "أعشاب مسموحة",
+    "Conditional medications": "أدوية مشروطة",
+    "Conditional herbs": "أعشاب مشروطة",
+    "Prohibited medications": "أدوية ممنوعة",
+    "Prohibited herbs": "أعشاب ممنوعة",
+    "Dosage · ": "الجرعة · ",
+    "Note · ": "ملاحظة · ",
+    "herb": "عشب",
+    "green": "آمن",
+    "yellow": "حذر",
+    "red": "خطر",
+    "prohibited": "ممنوع",
+    "Search drug name (English)...": "ابحث عن اسم الدواء (بالإنجليزية)...",
+    "Your feedback...": "تعليقك...",
+    "Select your region": "اختر منطقتك",
+    "Green — safe to use": "الأخضر — آمن للاستخدام",
+    "Yellow — caution required": "الأصفر — يتطلب الحذر",
+    "Red — strictly prohibited": "الأحمر — ممنوع منعاً باتاً",
+    
+    // Dynamic examples
+    "Fever & Pain": "الحمى والألم",
+    "Morning Sickness (Nausea & Vomiting)": "غثيان الصباح",
+    "Constipation": "الإمساك",
+    "Allergies": "الحساسية",
+    "Acid Reflux & Heartburn": "ارتجاع المريء",
+    "Diabetes (Gestational or Chronic)": "السكري",
+    "Hypertension (High Blood Pressure)": "ارتفاع ضغط الدم",
+    "Hypertension — Chronic or Crisis": "ارتفاع ضغط الدم — مزمن أو أزمة",
+    
+    "All Markets": "جميع الأسواق",
+    "Jordan": "الأردن",
+    "Europe / UK": "أوروبا / بريطانيا",
+    "USA": "الولايات المتحدة",
+    
+    "Approved during pregnancy": "معتمد أثناء الحمل",
+    "First-line options with the strongest safety record. Always follow dosage and double-check with your physician.": "خيارات الخط الأول ذات سجل الأمان الأقوى. اتبع الجرعة دائمًا وتحقق مع طبيبك.",
+    "Use only under medical supervision": "استخدمه تحت إشراف طبي فقط",
+    "These conditions and medications require professional monitoring. Self-adjustment is unsafe.": "تتطلب هذه الحالات والأدوية مراقبة مهنية. التعديل الذاتي غير آمن.",
+    "Strictly prohibited during pregnancy": "ممنوع منعا باتا أثناء الحمل",
+    "These substances are globally dangerous. They remain visible across every regional filter.": "هذه المواد خطيرة عالميا. تظل مرئية عبر كل مرشح إقليمي."
+  }
+};
+
+function t(str) {
+  if (!str) return str;
+  if (state.lang === 'ar' && i18n.ar[str]) return i18n.ar[str];
+  return str;
+}
+
+function applyLang() {
+  document.documentElement.lang = state.lang;
+  document.documentElement.dir = state.lang === 'ar' ? 'rtl' : 'ltr';
+  $('#lang-toggle').textContent = state.lang === 'en' ? 'AR' : 'EN';
+  
+  $$('[data-i18n]').forEach(el => {
+    el.textContent = t(el.getAttribute('data-i18n'));
+  });
+  $$('[data-i18n-placeholder]').forEach(el => {
+    el.placeholder = t(el.getAttribute('data-i18n-placeholder'));
+  });
+
+  if (state.data) {
+    renderRegions();
+    renderCategorySummaries();
+    renderCategoryView();
+    renderQuiz();
+  }
+}
 
 // ---------------------------------------------------------------------------
 // Utilities
@@ -88,23 +193,21 @@ async function api(path, opts = {}) {
 
 async function loadData() {
   state.data = await api('/api/data');
-  renderRegions();
+  applyLang();
   renderStats();
-  renderCategorySummaries();
-  renderCategoryView();
-  renderQuiz();
 }
 
 // ---------------------------------------------------------------------------
 // Region selector
 // ---------------------------------------------------------------------------
 function renderRegions() {
+  if (!state.data) return;
   const sel = $('#region-select');
   sel.innerHTML = state.data.regions
     .map(
       (r) => `<option value="${escapeHTML(r.id)}" ${
         r.id === state.region ? 'selected' : ''
-      }>${escapeHTML(r.label)}</option>`
+      }>${escapeHTML(t(r.label))}</option>`
     )
     .join('');
   const active = state.data.regions.find((r) => r.id === state.region) || state.data.regions[0];
@@ -132,17 +235,18 @@ function renderStats() {
 }
 
 function renderCategorySummaries() {
+  if (!state.data) return;
   const labels = {
-    green: 'first-line OTC + permitted herbs',
-    yellow: 'managed conditions',
-    red: 'prohibited drugs + herbs'
+    green: t('First-line medications & permitted herbs.'),
+    yellow: t('Conditional use under medical supervision.'),
+    red: t('Globally prohibited drugs & herbs.')
   };
   $$('[data-summary]').forEach((el) => {
     const key = el.dataset.summary;
     const cat = state.data.categories[key];
     const total =
       (cat.medications?.length || 0) + (cat.herbs?.length || 0);
-    el.textContent = `${total} entries · ${labels[key]}`;
+    el.textContent = `${total} · ${labels[key]}`;
   });
 }
 
@@ -174,7 +278,13 @@ function setTab(tab) {
   state.tab = tab;
   document.body.dataset.accent = tab;
   $$('.tab-pill').forEach((b) => b.setAttribute('aria-selected', b.dataset.tab === tab ? 'true' : 'false'));
-  if (state.data) renderCategoryView();
+  
+  if (state.data) {
+    // Also reset search when switching tabs for a clean view, but optional.
+    // $('#search-input').value = '';
+    // state.searchQuery = '';
+    renderCategoryView();
+  }
 }
 
 function renderCategoryView() {
@@ -189,13 +299,13 @@ function renderCategoryView() {
     <div class="flex items-center gap-4">
       <span class="grid h-14 w-14 place-items-center rounded-2xl ${tone.accent} text-3xl text-white shadow-lg">${cat.emoji}</span>
       <div>
-        <p class="text-xs font-semibold uppercase tracking-wide ${tone.text}/80">${escapeHTML(cat.label)} mode</p>
-        <h2 class="mt-1 text-2xl font-extrabold ${tone.text}">${escapeHTML(cat.headline)}</h2>
-        <p class="mt-1 max-w-2xl text-sm ${tone.text}/80">${escapeHTML(cat.blurb)}</p>
+        <p class="text-xs font-semibold uppercase tracking-wide ${tone.text}/80">${escapeHTML(t(cat.label))}</p>
+        <h2 class="mt-1 text-2xl font-extrabold ${tone.text}">${escapeHTML(t(cat.headline))}</h2>
+        <p class="mt-1 max-w-2xl text-sm ${tone.text}/80">${escapeHTML(t(cat.blurb))}</p>
       </div>
     </div>
     ${state.tab === 'red'
-      ? `<div class="mt-4 flex items-start gap-2 rounded-2xl bg-white/70 p-3 text-xs font-semibold text-rose-700"><span class="text-base">🌐</span> Red entries are always shown regardless of the regional filter — these substances are globally dangerous.</div>`
+      ? `<div class="mt-4 flex items-start gap-2 rounded-2xl bg-white/70 p-3 text-xs font-semibold text-rose-700"><span class="text-base">🌐</span> ${t('These substances are globally dangerous. They remain visible across every regional filter.')}</div>`
       : ''}
   `;
 
@@ -203,17 +313,28 @@ function renderCategoryView() {
   const wrap = $('#category-content');
   wrap.innerHTML = '';
 
+  let meds = cat.medications || [];
+  let herbs = cat.herbs || [];
+
+  if (state.searchQuery) {
+    const q = state.searchQuery.toLowerCase();
+    meds = meds.filter(m => (m.name || '').toLowerCase().includes(q));
+    herbs = herbs.filter(h => (h.name || '').toLowerCase().includes(q));
+  }
+
   if (state.tab === 'green') {
-    wrap.appendChild(renderMedSection(cat.medications, 'green', 'Safe medications'));
-    wrap.appendChild(renderHerbSection(cat.herbs, 'green', 'Permitted herbs', false));
+    if (meds.length) wrap.appendChild(renderMedSection(meds, 'green', 'Safe medications'));
+    if (herbs.length) wrap.appendChild(renderHerbSection(herbs, 'green', 'Permitted herbs', false));
   } else if (state.tab === 'yellow') {
-    wrap.appendChild(renderMedSection(cat.medications, 'yellow', 'Conditional medications'));
-    if (cat.herbs?.length) {
-      wrap.appendChild(renderHerbSection(cat.herbs, 'yellow', 'Conditional herbs', false));
-    }
+    if (meds.length) wrap.appendChild(renderMedSection(meds, 'yellow', 'Conditional medications'));
+    if (herbs.length) wrap.appendChild(renderHerbSection(herbs, 'yellow', 'Conditional herbs', false));
   } else if (state.tab === 'red') {
-    wrap.appendChild(renderRedSection(cat.medications, 'Prohibited medications'));
-    wrap.appendChild(renderRedSection(cat.herbs, 'Prohibited herbs'));
+    if (meds.length) wrap.appendChild(renderRedSection(meds, 'Prohibited medications'));
+    if (herbs.length) wrap.appendChild(renderRedSection(herbs, 'Prohibited herbs'));
+  }
+
+  if (!meds.length && !herbs.length && state.searchQuery) {
+    wrap.innerHTML = `<div class="p-6 text-center text-ink-500 font-medium">No results found for "${escapeHTML(state.searchQuery)}".</div>`;
   }
 }
 
@@ -222,8 +343,8 @@ function sectionShell(title, tone, body) {
   wrap.className = 'fade-in';
   wrap.innerHTML = `
     <header class="mb-3 flex items-end justify-between">
-      <h3 class="text-lg font-bold text-ink-900">${escapeHTML(title)}</h3>
-      <span class="pill pill-${tone}">${tone}</span>
+      <h3 class="text-lg font-bold text-ink-900">${escapeHTML(t(title))}</h3>
+      <span class="pill pill-${tone}">${escapeHTML(t(tone))}</span>
     </header>
     <div class="grid gap-3 sm:grid-cols-2"></div>
   `;
@@ -246,7 +367,7 @@ function medCard(m, tone) {
 
   const regionLabel = (id) => {
     const r = state.data.regions.find((x) => x.id === id);
-    return r ? `${r.flag} ${r.label}` : id;
+    return r ? `${r.flag} ${t(r.label)}` : t(id);
   };
 
   const brandsHTML = visible.length
@@ -268,13 +389,13 @@ function medCard(m, tone) {
   card.dataset.tone = tone;
   card.innerHTML = `
     <header>
-      <p class="text-[11px] font-semibold uppercase tracking-wide text-ink-500">${escapeHTML(m.purpose || '')}</p>
-      <h4 class="text-base font-extrabold text-ink-900">${escapeHTML(m.name || '')}</h4>
+      <p class="text-[11px] font-semibold uppercase tracking-wide text-ink-500">${escapeHTML(t(m.purpose) || '')}</p>
+      <h4 class="text-base font-extrabold text-ink-900 ltr:text-left rtl:text-right">${escapeHTML(m.name || '')}</h4>
     </header>
-    ${m.alert ? `<div class="rounded-xl border border-amber-300 bg-amber-100/70 px-3 py-2 text-xs font-bold uppercase tracking-wide text-amber-800">⚠ ${escapeHTML(m.alert)}</div>` : ''}
+    ${m.alert ? `<div class="rounded-xl border border-amber-300 bg-amber-100/70 px-3 py-2 text-xs font-bold uppercase tracking-wide text-amber-800">⚠ ${escapeHTML(t(m.alert))}</div>` : ''}
     <div class="grid gap-1.5">${brandsHTML}</div>
-    ${m.dosage ? `<p class="rounded-xl bg-white/70 px-3 py-2 text-xs leading-relaxed text-ink-700"><span class="font-bold text-ink-900">Dosage · </span>${escapeHTML(m.dosage)}</p>` : ''}
-    ${m.warning ? `<p class="rounded-xl bg-white/70 px-3 py-2 text-xs leading-relaxed text-ink-700"><span class="font-bold text-ink-900">Note · </span>${escapeHTML(m.warning)}</p>` : ''}
+    ${m.dosage ? `<p class="rounded-xl bg-white/70 px-3 py-2 text-xs leading-relaxed text-ink-700"><span class="font-bold text-ink-900">${t('Dosage · ')}</span>${escapeHTML(t(m.dosage))}</p>` : ''}
+    ${m.warning ? `<p class="rounded-xl bg-white/70 px-3 py-2 text-xs leading-relaxed text-ink-700"><span class="font-bold text-ink-900">${t('Note · ')}</span>${escapeHTML(t(m.warning))}</p>` : ''}
   `;
   return card;
 }
@@ -286,10 +407,10 @@ function renderHerbSection(herbs = [], tone, title) {
     card.dataset.tone = tone;
     card.innerHTML = `
       <header class="flex items-start justify-between gap-2">
-        <h4 class="text-base font-extrabold text-ink-900">🌿 ${escapeHTML(h.name)}</h4>
-        <span class="pill pill-${tone}">herb</span>
+        <h4 class="text-base font-extrabold text-ink-900 ltr:text-left rtl:text-right">🌿 ${escapeHTML(h.name)}</h4>
+        <span class="pill pill-${tone}">${t('herb')}</span>
       </header>
-      <p class="text-sm leading-relaxed text-ink-700">${escapeHTML(h.benefit || h.reason || '')}</p>
+      <p class="text-sm leading-relaxed text-ink-700">${escapeHTML(t(h.benefit) || t(h.reason) || '')}</p>
     `;
     return card;
   });
@@ -304,10 +425,10 @@ function renderRedSection(items = [], title) {
     const isHerb = item.id?.startsWith('herb-');
     card.innerHTML = `
       <header class="flex items-start justify-between gap-2">
-        <h4 class="text-base font-extrabold text-rose-800">${isHerb ? '🌿 ' : '💊 '}${escapeHTML(item.name)}</h4>
-        <span class="pill pill-red">prohibited</span>
+        <h4 class="text-base font-extrabold text-rose-800 ltr:text-left rtl:text-right">${isHerb ? '🌿 ' : '💊 '}${escapeHTML(item.name)}</h4>
+        <span class="pill pill-red">${t('prohibited')}</span>
       </header>
-      <p class="text-sm leading-relaxed text-rose-900/80">${escapeHTML(item.reason || '')}</p>
+      <p class="text-sm leading-relaxed text-rose-900/80">${escapeHTML(t(item.reason) || '')}</p>
     `;
     return card;
   });
@@ -318,6 +439,7 @@ function renderRedSection(items = [], title) {
 // Quiz
 // ---------------------------------------------------------------------------
 function renderQuiz() {
+  if (!state.data) return;
   const grid = $('#quiz-grid');
   grid.innerHTML = '';
   state.data.quiz.forEach((q, idx) => {
@@ -327,7 +449,7 @@ function renderQuiz() {
     card.innerHTML = `
       <header class="flex items-start gap-2">
         <span class="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-brand-100 text-xs font-bold text-brand-700">${idx + 1}</span>
-        <p class="text-sm font-semibold leading-relaxed text-ink-900">${escapeHTML(q.statement)}</p>
+        <p class="text-sm font-semibold leading-relaxed text-ink-900">${escapeHTML(t(q.statement))}</p>
       </header>
       <div class="quiz-buttons">
         <button class="quiz-btn" type="button" data-answer="true">True</button>
@@ -358,7 +480,7 @@ function answerQuiz(q, card, btn) {
 
   const fb = card.querySelector('.quiz-feedback');
   fb.classList.remove('hidden');
-  fb.innerHTML = `<strong>${correct ? '✅ Correct.' : '❌ Not quite.'}</strong> ${escapeHTML(q.explanation)}`;
+  fb.innerHTML = `<strong>${correct ? '✅' : '❌'}</strong> ${escapeHTML(t(q.explanation))}`;
   updateQuizScore();
 }
 
@@ -745,6 +867,32 @@ function bindEvents() {
   $$('#admin-tabs .admin-tab').forEach((b) =>
     b.addEventListener('click', () => setAdminTab(b.dataset.adminTab))
   );
+
+  // Search input
+  const searchInput = $('#search-input');
+  if (searchInput) {
+    searchInput.addEventListener('input', (e) => {
+      state.searchQuery = e.target.value;
+      renderCategoryView();
+    });
+  }
+
+  // Feedback form
+  const feedbackForm = $('#feedback-form');
+  if (feedbackForm) {
+    feedbackForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      $('#feedback-text').value = '';
+      toast(t('Thank you for your feedback!'), 'success');
+    });
+  }
+
+  // Lang toggle
+  $('#lang-toggle').addEventListener('click', () => {
+    state.lang = state.lang === 'en' ? 'ar' : 'en';
+    localStorage.setItem('mm.lang', state.lang);
+    applyLang();
+  });
 
   // close handlers
   $$('.close-modal').forEach((b) =>

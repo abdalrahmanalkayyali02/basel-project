@@ -2,42 +2,42 @@
   "meta": {
     "title": "MomsMed Guide",
     "tagline": "Pregnancy-safe medication & herb catalog",
-    "updatedAt": "2026-06-08T07:12:16.618Z",
-    "version": 2
+    "updatedAt": "2026-06-08T07:05:57.705Z",
+    "version": 3
   },
   "regions": [
     {
       "id": "all",
       "label": "All Markets",
-      "flag": "🌍"
+      "flag": "??"
     },
     {
       "id": "jordan",
       "label": "Jordan",
-      "flag": "🇯🇴"
+      "flag": "????"
     },
     {
       "id": "europe",
       "label": "Europe / UK",
-      "flag": "🇪🇺"
+      "flag": "????"
     },
     {
       "id": "us",
       "label": "USA",
-      "flag": "🇺🇸"
+      "flag": "????"
     }
   ],
   "categories": {
     "green": {
       "id": "green",
       "label": "Safe",
-      "emoji": "🟢",
+      "emoji": "??",
       "headline": "Approved during pregnancy",
       "blurb": "First-line options with the strongest safety record. Always follow dosage and double-check with your physician.",
       "medications": [
         {
           "id": "med-paracetamol",
-          "name": "Acetaminophen تيست تيست",
+          "name": "Acetaminophen ",
           "purpose": "Fever & Pain",
           "brands": {
             "jordan": [
@@ -52,8 +52,8 @@
               "Tylenol"
             ]
           },
-          "dosage": "500–1000 mg every 6 hours as needed. Max 4000 mg / 24h.",
-          "warning": "Avoid \"Extra\" formulations — they contain caffeine or NSAIDs (ibuprofen / Advil) which are not first-line safe."
+          "dosage": "500-1000 mg every 6 hours as needed. Max 4000 mg / 24h.",
+          "warning": "Avoid \"Extra\" formulations - they contain caffeine or NSAIDs (ibuprofen / Advil) which are not first-line safe."
         },
         {
           "id": "med-morning-sickness",
@@ -128,7 +128,7 @@
         {
           "id": "herb-ginger",
           "name": "Ginger",
-          "benefit": "Contains gingerol — reduces morning sickness and may ease early uterine contractions."
+          "benefit": "Contains gingerol - reduces morning sickness and may ease early uterine contractions."
         },
         {
           "id": "herb-thyme",
@@ -160,7 +160,7 @@
     "yellow": {
       "id": "yellow",
       "label": "Caution",
-      "emoji": "🟡",
+      "emoji": "??",
       "headline": "Use only under medical supervision",
       "blurb": "These conditions and medications require professional monitoring. Self-adjustment is unsafe.",
       "medications": [
@@ -182,9 +182,9 @@
               "Mylanta"
             ]
           },
-          "dosage": "10–20 ml liquid OR 2 tablets after meals and before bed.",
+          "dosage": "10-20 ml liquid OR 2 tablets after meals and before bed.",
           "warning": "Gaviscon contains sodium. If you have high blood pressure or preeclampsia, switch to low-sodium options like Tums or Rennie under medical advice.",
-          "alert": "HIGH SODIUM IN GAVISCON — caution with hypertension or preeclampsia."
+          "alert": "HIGH SODIUM IN GAVISCON - caution with hypertension or preeclampsia."
         },
         {
           "id": "med-insulin",
@@ -201,7 +201,7 @@
               "Insulin (all approved brands)"
             ]
           },
-          "dosage": "Dose changes per trimester. Never self-adjust — requires endocrinologist supervision and frequent glucose monitoring.",
+          "dosage": "Dose changes per trimester. Never self-adjust - requires endocrinologist supervision and frequent glucose monitoring.",
           "warning": "Gold standard: a large molecule that does not cross the placenta. Untreated hyperglycemia causes macrosomia and delivery complications."
         },
         {
@@ -222,13 +222,13 @@
               "Trandate / Normodyne"
             ]
           },
-          "dosage": "Per physician — typically titrated to target BP. Requires fetal heart-rate monitoring and maternal kidney function checks.",
-          "warning": "Avoid ACE inhibitors and ARBs completely — they cause fetal renal agenesis (Red Category)."
+          "dosage": "Per physician - typically titrated to target BP. Requires fetal heart-rate monitoring and maternal kidney function checks.",
+          "warning": "Avoid ACE inhibitors and ARBs completely - they cause fetal renal agenesis (Red Category)."
         },
         {
           "id": "med-nifedipine",
           "name": "Nifedipine (Calcium Channel Blocker)",
-          "purpose": "Hypertension — Chronic or Crisis",
+          "purpose": "Hypertension - Chronic or Crisis",
           "brands": {
             "jordan": [
               "Adalat",
@@ -243,8 +243,8 @@
               "Adalat CC"
             ]
           },
-          "dosage": "Extended-Release (chronic): 30–60 mg orally once daily; titrate every 7–14 days; max 120 mg/day. Immediate-Release (crisis, SBP ≥160 or DBP ≥110): 10–20 mg orally, repeat in 20–30 minutes, max 60 mg per acute episode.",
-          "warning": "Linked with reduced preeclampsia/eclampsia risk and no significant impact on birthweight — but must be supervised."
+          "dosage": "Extended-Release (chronic): 30-60 mg orally once daily; titrate every 7-14 days; max 120 mg/day. Immediate-Release (crisis, SBP ?160 or DBP ?110): 10-20 mg orally, repeat in 20-30 minutes, max 60 mg per acute episode.",
+          "warning": "Linked with reduced preeclampsia/eclampsia risk and no significant impact on birthweight - but must be supervised."
         }
       ],
       "herbs": []
@@ -252,64 +252,64 @@
     "red": {
       "id": "red",
       "label": "Danger",
-      "emoji": "🔴",
+      "emoji": "??",
       "headline": "Strictly prohibited during pregnancy",
       "blurb": "These substances are globally dangerous. They remain visible across every regional filter.",
       "medications": [
         {
           "id": "red-methotrexate",
           "name": "Methotrexate",
-          "reason": "Blocks DNA synthesis via dihydrofolate reductase inhibition. Disrupts rapidly dividing embryonic cells — causes miscarriage and malformations."
+          "reason": "Blocks DNA synthesis via dihydrofolate reductase inhibition. Disrupts rapidly dividing embryonic cells - causes miscarriage and malformations."
         },
         {
           "id": "red-isotretinoin",
           "name": "Isotretinoin",
-          "reason": "Highly teratogenic. Disrupts craniofacial and CNS development via retinoic acid receptors — even minimal exposure is harmful."
+          "reason": "Highly teratogenic. Disrupts craniofacial and CNS development via retinoic acid receptors - even minimal exposure is harmful."
         },
         {
           "id": "red-thalidomide",
           "name": "Thalidomide",
-          "reason": "Interferes with limb angiogenesis — causes phocomelia and shortened or absent limbs."
+          "reason": "Interferes with limb angiogenesis - causes phocomelia and shortened or absent limbs."
         },
         {
           "id": "red-warfarin",
           "name": "Warfarin",
-          "reason": "Crosses the placenta. Vitamin K antagonism disrupts fetal bone/cartilage formation — skeletal dysplasia."
+          "reason": "Crosses the placenta. Vitamin K antagonism disrupts fetal bone/cartilage formation - skeletal dysplasia."
         },
         {
           "id": "red-ace",
           "name": "ACE Inhibitors",
-          "reason": "Blocks angiotensin II that fetal kidneys depend on — causes renal agenesis and oligohydramnios."
+          "reason": "Blocks angiotensin II that fetal kidneys depend on - causes renal agenesis and oligohydramnios."
         },
         {
           "id": "red-tetracyclines",
           "name": "Tetracyclines",
-          "reason": "Chelate calcium, deposit into fetal teeth and bones — permanent discoloration and growth inhibition."
+          "reason": "Chelate calcium, deposit into fetal teeth and bones - permanent discoloration and growth inhibition."
         },
         {
           "id": "red-valproic",
           "name": "Valproic Acid",
-          "reason": "Inhibits histone deacetylase and folate metabolism — neural tube defects."
+          "reason": "Inhibits histone deacetylase and folate metabolism - neural tube defects."
         },
         {
           "id": "red-ribavirin",
           "name": "Ribavirin",
-          "reason": "Guanosine analog. Severe teratogenicity in animal studies — contraindicated."
+          "reason": "Guanosine analog. Severe teratogenicity in animal studies - contraindicated."
         },
         {
           "id": "red-statins",
           "name": "Statins",
-          "reason": "Cholesterol is vital for fetal organogenesis and steroid synthesis — inhibition is harmful."
+          "reason": "Cholesterol is vital for fetal organogenesis and steroid synthesis - inhibition is harmful."
         },
         {
           "id": "red-misoprostol",
           "name": "Misoprostol",
-          "reason": "Used for medical abortion. If pregnancy continues — linked with Möbius sequence and limb defects."
+          "reason": "Used for medical abortion. If pregnancy continues - linked with M�bius sequence and limb defects."
         },
         {
           "id": "red-danazol",
           "name": "Danazol",
-          "reason": "Androgenic — causes virilization of female fetuses."
+          "reason": "Androgenic - causes virilization of female fetuses."
         },
         {
           "id": "red-finasteride",
@@ -319,12 +319,12 @@
         {
           "id": "red-leflunomide",
           "name": "Leflunomide",
-          "reason": "Highly teratogenic — long washout period required."
+          "reason": "Highly teratogenic - long washout period required."
         },
         {
           "id": "red-mifepristone",
           "name": "Mifepristone",
-          "reason": "Antiprogestin — induces abortion."
+          "reason": "Antiprogestin - induces abortion."
         },
         {
           "id": "red-clomiphene",
@@ -334,22 +334,22 @@
         {
           "id": "red-raloxifene",
           "name": "Raloxifene",
-          "reason": "Selective estrogen receptor modulator — fetal harm."
+          "reason": "Selective estrogen receptor modulator - fetal harm."
         },
         {
           "id": "red-ergot",
           "name": "Ergot Derivatives",
-          "reason": "Uterine vasoconstriction — fetal hypoxia."
+          "reason": "Uterine vasoconstriction - fetal hypoxia."
         },
         {
           "id": "red-endothelin",
           "name": "Endothelin Antagonists (Bosentan, Ambrisentan)",
-          "reason": "Teratogenic in animal models — contraindicated."
+          "reason": "Teratogenic in animal models - contraindicated."
         },
         {
           "id": "red-acitretin",
           "name": "Acitretin",
-          "reason": "Retinoid — severe teratogenicity persisting years after discontinuation."
+          "reason": "Retinoid - severe teratogenicity persisting years after discontinuation."
         }
       ],
       "herbs": [
@@ -361,12 +361,12 @@
         {
           "id": "herb-dong-quai",
           "name": "Dong Quai",
-          "reason": "Triggers uterine contractions — risk of miscarriage or premature birth."
+          "reason": "Triggers uterine contractions - risk of miscarriage or premature birth."
         },
         {
           "id": "herb-ginseng",
           "name": "Ginseng",
-          "reason": "Can harm the fetus — avoid during pregnancy."
+          "reason": "Can harm the fetus - avoid during pregnancy."
         },
         {
           "id": "herb-cohosh",
@@ -376,7 +376,7 @@
         {
           "id": "herb-hibiscus",
           "name": "Hibiscus",
-          "reason": "Disrupts pregnancy hormones — may cause premature birth."
+          "reason": "Disrupts pregnancy hormones - may cause premature birth."
         },
         {
           "id": "herb-st-johns-wort",
@@ -386,7 +386,7 @@
         {
           "id": "herb-yarrow",
           "name": "Yarrow",
-          "reason": "Muscle relaxant — may contribute to premature labor."
+          "reason": "Muscle relaxant - may contribute to premature labor."
         },
         {
           "id": "herb-lemongrass",
@@ -402,28 +402,28 @@
       "statement": "All natural herbs are completely safe during pregnancy since they come from nature.",
       "answer": false,
       "feedbackTone": "red",
-      "explanation": "False ❌ — herbs like Dong Quai and Cohosh trigger immediate uterine contractions and miscarriage risk. \"Natural\" never means automatically safe."
+      "explanation": "False - herbs like Dong Quai and Cohosh trigger immediate uterine contractions and miscarriage risk. \"Natural\" never means automatically safe."
     },
     {
       "id": "q2",
       "statement": "Pregnant women can safely take any version of paracetamol, including \"Extra\" labeled packs.",
       "answer": false,
       "feedbackTone": "red",
-      "explanation": "False ❌ — \"Extra\" packs contain added caffeine or NSAIDs (e.g. ibuprofen) which are not first-line safe. Stick to plain paracetamol."
+      "explanation": "False - \"Extra\" packs contain added caffeine or NSAIDs (e.g. ibuprofen) which are not first-line safe. Stick to plain paracetamol."
     },
     {
       "id": "q3",
       "statement": "Gaviscon is perfectly safe for a pregnant woman even if she suffers from chronic high blood pressure.",
       "answer": false,
       "feedbackTone": "yellow",
-      "explanation": "False ❌ — Gaviscon has a high sodium load. Hypertensive or preeclampsia patients should switch to low-sodium options like Tums or Rennie."
+      "explanation": "False - Gaviscon has a high sodium load. Hypertensive or preeclampsia patients should switch to low-sodium options like Tums or Rennie."
     },
     {
       "id": "q4",
       "statement": "Insulin is considered the Gold Standard treatment for managing gestational diabetes.",
       "answer": true,
       "feedbackTone": "green",
-      "explanation": "True ✅ — Insulin molecules are too large to cross the placental barrier, keeping the baby safe while controlling maternal glucose."
+      "explanation": "True - Insulin molecules are too large to cross the placental barrier, keeping the baby safe while controlling maternal glucose."
     }
   ]
 }

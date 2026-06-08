@@ -2,11 +2,11 @@
  * MomsMed Guide - Express backend
  * --------------------------------
  * - Serves the SPA from /public
- * - Persists the entire catalog to a single flat file: file.txt (JSON)
+ * - Persists the entire catalog to a single flat file: file.json (JSON)
  * - Provides:
  *     GET  /api/data            -> returns the current catalog JSON
  *     POST /api/login           -> validates hardcoded admin credentials
- *     POST /api/save            -> overwrites file.txt with new catalog (auth-gated)
+ *     POST /api/save            -> overwrites file.json with new catalog (auth-gated)
  *
  * Credentials are intentionally hardcoded per project spec:
  *   Username: basel
@@ -21,14 +21,15 @@ const crypto = require('crypto');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-const DATA_FILE = path.join(__dirname, 'file.txt');
+const DATA_FILE = path.join(__dirname, 'file.json');
+const FEEDBACK_FILE = path.join(__dirname, 'feedbackfile.json');
 const PUBLIC_DIR = path.join(__dirname, 'public');
 
 const ADMIN_USER = 'basel';
 const ADMIN_PASS = 'basel2004';
 
 // ---------------------------------------------------------------------------
-// Initial catalog payload (used to seed file.txt on first launch)
+// Initial catalog payload (used to seed file.json on first launch)
 // ---------------------------------------------------------------------------
 const INITIAL_DATA = {
   meta: {
@@ -329,13 +330,13 @@ const INITIAL_DATA = {
 function ensureDataFile() {
   if (!fs.existsSync(DATA_FILE)) {
     fs.writeFileSync(DATA_FILE, JSON.stringify(INITIAL_DATA, null, 2), 'utf8');
-    console.log('[MomsMed] Seeded file.txt with initial dataset');
+    console.log('[MomsMed] Seeded file.json with initial dataset');
     return;
   }
   try {
     JSON.parse(fs.readFileSync(DATA_FILE, 'utf8'));
   } catch (err) {
-    console.warn('[MomsMed] file.txt is corrupted, re-seeding…', err.message);
+    console.warn('[MomsMed] file.json is corrupted, re-seeding…', err.message);
     fs.writeFileSync(DATA_FILE, JSON.stringify(INITIAL_DATA, null, 2), 'utf8');
   }
 }
@@ -386,7 +387,7 @@ app.get('/api/data', (_req, res) => {
   try {
     res.json(readData());
   } catch (err) {
-    res.status(500).json({ error: 'Failed to read file.txt: ' + err.message });
+    res.status(500).json({ error: 'Failed to read file.json: ' + err.message });
   }
 });
 
@@ -416,7 +417,36 @@ app.post('/api/save', requireAuth, (req, res) => {
     writeData(payload);
     res.json({ ok: true, data: readData() });
   } catch (err) {
-    res.status(500).json({ error: 'Failed to write file.txt: ' + err.message });
+    res.status(500).json({ error: 'Failed to write file.json: ' + err.message });
+  }
+});
+
+app.post('/api/feedback', (req, res) => {
+  try {
+    const feedback = req.body;
+    if (!feedback || !feedback.text) {
+      return res.status(400).json({ error: 'Feedback text is required' });
+    }
+    
+    let existingFeedback = [];
+    if (fs.existsSync(FEEDBACK_FILE)) {
+      try {
+        existingFeedback = JSON.parse(fs.readFileSync(FEEDBACK_FILE, 'utf8'));
+      } catch (err) {
+        console.warn('[MomsMed] feedbackfile.json corrupted, starting fresh.');
+      }
+    }
+    
+    existingFeedback.push({
+      id: crypto.randomBytes(8).toString('hex'),
+      text: feedback.text,
+      timestamp: new Date().toISOString()
+    });
+    
+    fs.writeFileSync(FEEDBACK_FILE, JSON.stringify(existingFeedback, null, 2), 'utf8');
+    res.json({ ok: true });
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to save feedback: ' + err.message });
   }
 });
 

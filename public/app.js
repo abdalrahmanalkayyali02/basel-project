@@ -2,7 +2,7 @@
  * MomsMed Guide - Vanilla JS client
  * ---------------------------------------------------------------------------
  * State
- *   - data: full catalog loaded from /api/data (mirrors file.txt)
+ *   - data: full catalog loaded from /api/data (mirrors file.json)
  *   - region: current regional filter (all | jordan | europe | us)
  *   - tab: active category (green | yellow | red)
  *   - auth: { token, isAdmin }
@@ -810,8 +810,8 @@ async function saveAdmin() {
     renderCategorySummaries();
     renderCategoryView();
     renderQuiz();
-    $('#admin-status').textContent = `Saved to file.txt — version ${state.data.meta.version}.`;
-    toast('Changes written to file.txt', 'success');
+    $('#admin-status').textContent = `Saved to file.json — version ${state.data.meta.version}.`;
+    toast('Changes written to file.json', 'success');
   } catch (err) {
     if (err.message?.toLowerCase().includes('unauthorized')) {
       state.auth.token = null;
@@ -880,10 +880,20 @@ function bindEvents() {
   // Feedback form
   const feedbackForm = $('#feedback-form');
   if (feedbackForm) {
-    feedbackForm.addEventListener('submit', (e) => {
+    feedbackForm.addEventListener('submit', async (e) => {
       e.preventDefault();
-      $('#feedback-text').value = '';
-      toast(t('Thank you for your feedback!'), 'success');
+      const text = $('#feedback-text').value.trim();
+      if (!text) return;
+      try {
+        await api('/api/feedback', {
+          method: 'POST',
+          body: JSON.stringify({ text })
+        });
+        $('#feedback-text').value = '';
+        toast(t('Thank you for your feedback!'), 'success');
+      } catch (err) {
+        toast('Failed to submit feedback: ' + err.message, 'error');
+      }
     });
   }
 

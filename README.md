@@ -1,6 +1,6 @@
 # MomsMed Guide
 
-A pharmacist-curated, QR-friendly Single Page Application that lists pregnancy-safe medications and herbs across Jordan, Europe/UK and US markets — plus a doctor's CRUD portal that persists every change to a single flat file (`file.txt`).
+A pharmacist-curated, QR-friendly Single Page Application that lists pregnancy-safe medications and herbs across Jordan, Europe/UK and US markets — plus a doctor's CRUD portal that persists every change to a single flat file (`file.json`).
 
 Built per the **Pharmacy Practice — Practical Pharmacists** project spec.
 
@@ -8,7 +8,7 @@ Built per the **Pharmacy Practice — Practical Pharmacists** project spec.
 
 - **Backend:** Node.js + Express (single file: `server.js`)
 - **Frontend:** Vanilla JavaScript (ES6+), Tailwind CSS via CDN, Plus Jakarta Sans (Google Fonts)
-- **Storage:** `file.txt` (JSON). No SQL/NoSQL.
+- **Storage:** `file.json` (JSON). No SQL/NoSQL.
 - **Auth:** Hardcoded admin (`basel` / `basel2004`) with a short-lived session token.
 
 ## Run locally
@@ -20,15 +20,15 @@ npm start
 
 Open <http://localhost:3000>.
 
-The server seeds `file.txt` automatically on first launch if it doesn't exist.
+The server seeds `file.json` automatically on first launch if it doesn't exist.
 
 ## API surface
 
 | Method | Path          | Purpose                                                   |
 | ------ | ------------- | --------------------------------------------------------- |
-| GET    | `/api/data`   | Read the entire catalog from `file.txt`                   |
+| GET    | `/api/data`   | Read the entire catalog from `file.json`                   |
 | POST   | `/api/login`  | Validate admin credentials, return a session token        |
-| POST   | `/api/save`   | Overwrite `file.txt` with the new catalog (auth required) |
+| POST   | `/api/save`   | Overwrite `file.json` with the new catalog (auth required) |
 | POST   | `/api/logout` | Invalidate the active session token                       |
 
 ## Features
@@ -38,5 +38,5 @@ The server seeds `file.txt` automatically on first launch if it doesn't exist.
   Red entries always remain visible (globally dangerous).
 - Interactive true/false quiz with color-coded feedback boxes.
 - Doctor-only CRUD portal: add / edit / delete medications, herbs and quiz cards;
-  one click persists to `file.txt`.
+  one click persists to `file.json`.
 - Mobile-first responsive layout — optimized for QR-code phone access in pharmacies.
